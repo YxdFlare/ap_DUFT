@@ -14,6 +14,7 @@ module DUFT_ap_ctrl_chain_tb;
   reg        ap_rst;
   reg        ap_start;
   reg        ap_continue;
+  reg        ap_ce;
 
   // outputs
   wire [31:0] ap_return;
@@ -31,6 +32,7 @@ module DUFT_ap_ctrl_chain_tb;
     .ap_rst(ap_rst),
     .ap_start(ap_start),
     .ap_continue(ap_continue),
+    .ap_ce(ap_ce),
     .ap_idle(ap_idle),
     .ap_ready(ap_ready),
     .ap_done(ap_done),
@@ -178,6 +180,7 @@ module DUFT_ap_ctrl_chain_tb;
       $display("----------------------------------------------------------------------------------------------");
       $display("STARTING TEST CASE : %0s",name);
       ap_continue = 1'b1;
+      ap_ce = 1'b1;
     end
   endtask
 
@@ -191,6 +194,7 @@ module DUFT_ap_ctrl_chain_tb;
         $display("ENDED TEST CASE : %0s : FAILED",name);
       $display("----------------------------------------------------------------------------------------------");
       ap_continue = 1'b0;
+      ap_ce = 1'b0;
     end
   endtask
 
