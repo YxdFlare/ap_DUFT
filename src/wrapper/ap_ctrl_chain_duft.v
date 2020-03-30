@@ -10,6 +10,7 @@ module DUFT_ap_ctrl_chain(
   input        ap_rst,
   input        ap_start,
   input        ap_continue,
+  input        ap_ce,
   output reg   ap_idle,
   output reg   ap_ready,
   output reg   ap_done,
@@ -33,9 +34,8 @@ prewrapped core_DUFT (
 // read it combinational, write needs 1 cycle
 reg rden;
 reg wren;
-
-assign rd_addr = rden ? addr : 32'hFFFFFFFF;
-assign wr_addr = wren ? addr : 32'hFFFFFFFF;
+assign rd_addr = (rden && ap_ce) ? addr : 32'hFFFFFFFF;
+assign wr_addr = (wren && ap_ce) ? addr : 32'hFFFFFFFF;
 
 localparam IDLE     = 3'd0;
 localparam WR_ACK   = 3'd1;
@@ -59,6 +59,8 @@ reg [2:0] next_state;
 always @(posedge clk ) begin
   if (ap_rst)
     current_state <= RST;
+  else if (!ap_ce)
+    current_state <= current_state;
   else
     current_state <= next_state;
 end
