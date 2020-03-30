@@ -1,3 +1,7 @@
+`include "./dft_ctrl.v"
+`include "./dft_datapath.v"
+`include "./dut.v"
+
 module dft_top #(
   parameter chain_len = 32'd32,
   parameter dump_nbr = 27'd1

@@ -1,4 +1,7 @@
 `timescale 1ns / 100ps
+`include "../lib/mem.v"
+`include "../lib/ScanReg.v"
+`include "../lib/counters.v"
 
 module SIPO_buf_256B_datapath(
   input sin,

@@ -1,3 +1,6 @@
+`include "./SIPObuf_ctrl.v"
+`include "./SIPObuf_datapath.v"
+
 module SIPO_buf_256B(
   input clk,
   input reset,

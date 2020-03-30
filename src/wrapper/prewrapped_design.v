@@ -1,3 +1,6 @@
+`include "./prewrapper.v"
+`include "../duft/dfut_top.v"
+
 module prewrapped(
   input clk,
   input reset,

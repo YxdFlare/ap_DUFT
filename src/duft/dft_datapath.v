@@ -1,3 +1,6 @@
+`include "./SIPObuf/SIPObuf.v"
+`include "../lib/ScanReg.v"
+
 module dft_datapath(
   input clk,
   input reset,

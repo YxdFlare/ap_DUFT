@@ -1,7 +1,8 @@
 //----------------------------------------------------
 // top-level
 //----------------------------------------------------
-
+`include "./prewrapper_ctrl.v"
+`include "./prewrapper_datapath.v"
 module axi_prewrapper 
 #(
   parameter p_sc_nbr = 16,

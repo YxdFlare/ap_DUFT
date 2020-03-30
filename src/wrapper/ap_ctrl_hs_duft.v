@@ -1,4 +1,5 @@
 `timescale 1ns /1ps
+`include "./prewrapped_design.v"
 
 module DUFT_ap_ctrl_hs(
   input [31:0] addr,

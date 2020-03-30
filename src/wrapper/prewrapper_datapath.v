@@ -1,7 +1,8 @@
 //----------------------------------------------------
 // datapath
 //----------------------------------------------------
-
+`include "../lib/reg_and_regfile.v"
+`include "./dut_io_unpack.v"
 module axi_prewrapper_datapath
 #(
   parameter p_sc_nbr = 16,

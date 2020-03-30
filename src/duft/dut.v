@@ -1,4 +1,6 @@
 `timescale 1ns / 100ps
+`include "./dut_ctrl.v"
+`include "./dut_datapath.v"
 
 module incr_decr(
 	input [31:0] data_in,

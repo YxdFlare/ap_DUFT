@@ -1,3 +1,5 @@
+`include "../lib/reg_and_regfile.v"
+
 module dut_io_unpack
 #(
   parameter dut_input_width = 256,

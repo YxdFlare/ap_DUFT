@@ -1,4 +1,5 @@
 `timescale 1ns /1ps
+`include "../wrapper/ap_ctrl_hs_duft.v"
 module DUFT_ap_ctrl_hs_tb;
 
   //--------------------------------------------------
