@@ -1,4 +1,4 @@
-typedef unsigned int u32;
+#include "type.h"
 
 int array_teq(u32* arr1, u32 len1, u32* arr2, u32 len2) 
 {
