@@ -1,6 +1,5 @@
-typedef unsigned int u32;
-u32 _reg = 0;
-
+#include "../lib/common.c"
+extern u32 _reg;
 u32 DUFT_ap_ctrl_chain(u32 addr, u32 wr_data, u32 rd_wr)
 {
   if(addr == 0)

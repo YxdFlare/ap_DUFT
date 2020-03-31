@@ -1,3 +1,4 @@
+#include "../lib/common.c"
 // address mapping
 #define OPCODE_BASE    0x00000000
 #define STATE_BASE     0x00000001
@@ -9,8 +10,6 @@
 #define TEST_OUT_BASE  0xFF000001
 #define INVALID_ADDR   0xFFFFFFFF
 #define NULL_ADDR      0x12345678
-
-typedef unsigned int u32;
 
 typedef struct {
   u32* opcode;
