@@ -30,6 +30,10 @@ int main()
   }
   else {
     printf("Test FAILED\n");
+    printf("Expected data:------------------------------------------------------------\n\t");
+    print_array(a,SIZE);
+    printf("Collected data:-----------------------------------------------------------\n\t");
+    print_array(b,SIZE);
     return 1;
   }
-};
+}
