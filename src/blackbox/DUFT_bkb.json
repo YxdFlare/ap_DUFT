@@ -3,11 +3,30 @@
   "rtl_top_module_name" : "DUFT_ap_ctrl_chain",
   
   "c_files" : [
-    {"c_file" : "../src/beh/DUFT_ap_ctrl_chain.c","cflag" : "-I../src/lib -I../src/inc"}
+    {"c_file" : "../src/beh/DUFT_ap_ctrl_chain.c","cflag" : "-I../src/lib -I../src/inc -I../src/beh"},
+    {"c_file" : "../src/beh/DUT.c","cflag" : "-I../src/lib -I../src/inc -I../src/beh"}
   ],
   
   "rtl_files" : [
-    "../src/wrapper/ap_ctrl_chain_DUFT.v"
+    "../src/wrapper/ap_ctrl_chain_DUFT.v",
+    "../src/wrapper/dut_io_unpack.v",
+    "../src/wrapper/prewrapped_design.v",
+    "../src/wrapper/prewrapper_ctrl.v",
+    "../src/wrapper/prewrapper_datapath.v",
+    "../src/wrapper/prewrapper.v",
+    "../src/lib/counters.v",
+    "../src/lib/mem.v",
+    "../src/lib/reg_and_regfile.v",
+    "../src/lib/ScanReg.v",
+    "../src/DUFT/dft_ctrl.v",
+    "../src/DUFT/dft_datapath.v",
+    "../src/DUFT/dut_ctrl.v",
+    "../src/DUFT/dut_datapath.v",
+    "../src/DUFT/dut.v",
+    "../src/DUFT/duft_top.v",
+    "../src/DUFT/SIPObuf/SIPObuf.v",
+    "../src/DUFT/SIPObuf/SIPObuf_ctrl.v",
+    "../src/DUFT/SIPObuf/SIPObuf_datapath.v"
   ],
   
   "c_parameters" : [
