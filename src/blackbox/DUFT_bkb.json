@@ -8,7 +8,7 @@
   ],
   
   "rtl_files" : [
-    "../src/wrapper/ap_ctrl_chain_DUFT.v",
+    "../src/wrapper/ap_ctrl_chain_duft.v",
     "../src/wrapper/dut_io_unpack.v",
     "../src/wrapper/prewrapped_design.v",
     "../src/wrapper/prewrapper_ctrl.v",
@@ -18,15 +18,15 @@
     "../src/lib/mem.v",
     "../src/lib/reg_and_regfile.v",
     "../src/lib/ScanReg.v",
-    "../src/DUFT/dft_ctrl.v",
-    "../src/DUFT/dft_datapath.v",
-    "../src/DUFT/dut_ctrl.v",
-    "../src/DUFT/dut_datapath.v",
-    "../src/DUFT/dut.v",
-    "../src/DUFT/duft_top.v",
-    "../src/DUFT/SIPObuf/SIPObuf.v",
-    "../src/DUFT/SIPObuf/SIPObuf_ctrl.v",
-    "../src/DUFT/SIPObuf/SIPObuf_datapath.v"
+    "../src/duft/dft_ctrl.v",
+    "../src/duft/dft_datapath.v",
+    "../src/duft/dut_ctrl.v",
+    "../src/duft/dut_datapath.v",
+    "../src/duft/dut.v",
+    "../src/duft/duft_top.v",
+    "../src/duft/SIPObuf/SIPObuf.v",
+    "../src/duft/SIPObuf/SIPObuf_ctrl.v",
+    "../src/duft/SIPObuf/SIPObuf_datapath.v"
   ],
   
   "c_parameters" : [

@@ -15,14 +15,14 @@ set_top main
 add_files -tb ../src/test/HLS_test_ap_dummy.c \
 -cflags "-I../src/beh -I../src/lib -I../src/inc"
 
-open_solution "solution1"
+open_solution "solution_dummy"
 set_part $part_name
 
 create_clock -period 10
 
 csim_design -ldflags "--verbose"
 
-csynth_design
+#csynth_design
 
 # CHOOSE EITHER VCD FILE GENERATION (1st option) or COSIM EXECUTION (2nd option)
-cosim_design -ldflags "" -trace_level port
+#cosim_design -ldflags "" -trace_level port
