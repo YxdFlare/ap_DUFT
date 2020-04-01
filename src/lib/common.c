@@ -29,3 +29,11 @@ int print_array(u32* arr, u32 len)
     printf("%d\t",arr[i]);
   printf("\n");
 }
+
+u32 get_bit(u32 data, int idx)
+{
+  u32 bit;
+  bit = data >> (idx - 1);
+  bit = bit & 1;
+  return bit;
+}
