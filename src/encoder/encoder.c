@@ -39,14 +39,16 @@ void set_color(u32* pix, u32 R, u32 G, u32 B)
 void encode(u32* prev_cycle, u32* current_cycle, u32* diff_img, int dump_nbr, int size)
 {
   int i,j,k;
+  u32* pix;
   for(i = 0;i<size;i++)
     for(j =0;j<size;j++) {
+        pix = diff_img + i * size * 3 + j*3;
       if(*(prev_cycle + i*size + j) == 1 && *(current_cycle + i*size + j) == 0)
-        set_color(diff_img + i * size + j,0,0,1);
+        set_color(pix,0,0,1);
       else if(*(prev_cycle + i*size + j) == 0 && *(current_cycle + i*size + j) == 1)
-        set_color(diff_img + i * size + j,0,1,0);
+        set_color(pix,0,1,0);
       else
-        set_color(diff_img + i * size + j,1,0,0);
+        set_color(pix,1,0,0);
     }
 }
 
@@ -60,7 +62,7 @@ void batch_encode(u32* collected_states, u32* img_set)
   for(cycle_idx = 1; cycle_idx < MAX_LATENCY; cycle_idx++) {
     reform(&collected_states[cycle_idx-1],&prev[0][0],DUMP_NBR,size);
     reform(&collected_states[cycle_idx],&current[0][0],DUMP_NBR,size);
-    img_set_ptr = img_set + cycle_idx - 1;
+    img_set_ptr = img_set + (cycle_idx - 1) * size * size * 3;
     encode(&prev[0][0],&current[0][0],img_set_ptr,DUMP_NBR,size);
   }
 }

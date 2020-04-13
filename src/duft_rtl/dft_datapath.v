@@ -1,5 +1,5 @@
 `include "./SIPObuf/SIPObuf.v"
-`include "../lib/ScanReg.v"
+`include "../lib_rtl/ScanReg.v"
 
 module dft_datapath(
   input clk,

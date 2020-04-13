@@ -33,7 +33,7 @@ int print_array(u32* arr, u32 len)
 u32 get_bit(u32 data, int idx)
 {
   u32 bit;
-  bit = data >> (idx - 1);
+  bit = data >> idx;
   bit = bit & 1;
   return bit;
 }

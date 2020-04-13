@@ -1,5 +1,5 @@
 `timescale 1ns / 100ps
-`include "../lib/ScanReg.v"
+`include "../lib_rtl/ScanReg.v"
 
 module IAS_datapath (
   input [31:0] data_in,
