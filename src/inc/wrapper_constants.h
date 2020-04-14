@@ -42,3 +42,6 @@
 // DUFT operations
 #define WRITE  0
 #define READ   1
+
+// encoder dimensions
+#define CH_NBR 3

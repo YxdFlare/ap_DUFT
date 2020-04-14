@@ -3,11 +3,18 @@ set project_name "zcu102"
 
 open_project -reset $project_name
 
-add_files -tb ../src/lib/common.c \
--cflags "-I../src/beh -I../src/lib -I../src/inc"
-
-add_files -tb ../src/beh/DUT.c \
--cflags "-I../src/beh -I../src/lib -I../src/inc"
+add_files  ../src/lib/common.c \
+-cflags "-I../src/beh -I../src/lib -I../src/inc -I../src/encoder  -I../src/dataproc"
+add_files   ../src/testbench/tb.c \
+-cflags "-I../src/beh -I../src/lib -I../src/inc -I../src/encoder  -I../src/dataproc"
+add_files   ../src/beh/DUFT_ap_ctrl_chain.c \
+-cflags "-I../src/beh -I../src/lib -I../src/inc -I../src/encoder  -I../src/dataproc"
+add_files   ../src/beh/DUT.c \
+-cflags "-I../src/beh -I../src/lib -I../src/inc -I../src/encoder  -I../src/dataproc"
+add_files   ../src/encoder/encoder.c \
+-cflags "-I../src/beh -I../src/lib -I../src/inc -I../src/encoder  -I../src/dataproc"
+add_files   ../src/dataproc/dataproc.c \
+-cflags "-I../src/beh -I../src/lib -I../src/inc -I../src/encoder  -I../src/dataproc"
 
 add_files -blackbox ../src/blackbox/DUFT_bkb.json
 
@@ -15,8 +22,8 @@ add_files -blackbox ../src/blackbox/DUFT_bkb.json
 set_top main
 
 # SPECIFY MODEL TO TEST HERE
-add_files -tb ../src/test/HLS_test_ap_DUFT.c \
--cflags "-I../src/beh -I../src/lib -I../src/inc"
+add_files -tb ../src/testbench/tb.c \
+-cflags "-I../src/beh -I../src/lib -I../src/inc -I../src/encoder  -I../src/dataproc"
 
 open_solution "solution1"
 set_part $part_name
@@ -25,7 +32,7 @@ create_clock -period 10
 
 csim_design -ldflags "--verbose"
 
-#csynth_design
+csynth_design
 
 # CHOOSE EITHER VCD FILE GENERATION (1st option) or COSIM EXECUTION (2nd option)
 #cosim_design -ldflags "" -trace_level port
