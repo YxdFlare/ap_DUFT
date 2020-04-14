@@ -76,7 +76,7 @@ int call_dft(u32 input,u32* dft_buf,int dump_nbr)
   return 0;
 }
 
-#define ITEM_NBR 10
+#define ITEM_NBR 100
 #define CH_NBR 3
 
 //-------------------------------------------------------------------------------
@@ -86,6 +86,7 @@ int call_dft(u32 input,u32* dft_buf,int dump_nbr)
 int main()
 {
   printf("\n\n\nIN MAIN : \n=================\n");
+  int a[4] = {0,1,2,3};
   // define data structures (memory allocation)
   int SIZE = calc_size(DUMP_NBR);
   /* ai */                  u32 test_inputs[ITEM_NBR];
@@ -110,23 +111,15 @@ int main()
   printf("Test harness initialized. Start testing.\n");
   printf("--------------------------------------\n");
   while (i < ITEM_NBR && all_passing) {
-    printf("Test case %d : ",i);
-    // pointer bumping
-    dcs_ptr += i * MAX_LATENCY * DUMP_NBR;
-    printf(".");
-    encoded_imgset_ptr += i * (MAX_LATENCY-1) * SIZE * SIZE * CH_NBR;
-    printf(".");
-    final_results_ptr += i * (MAX_LATENCY-1);
-    printf(".");
+    printf("Test item %d : ",i);
+    printf("at %0x (%0x)",encoded_imgset_ptr,(MAX_LATENCY-1) * SIZE * SIZE * CH_NBR * sizeof(u32));
     // input a number to the DUFT and get dcs
     err_dft = call_dft(test_inputs[i],dcs_ptr,DUMP_NBR);
-    printf(".");
     // input a number to the DUT and get output
     err_dut = call_dut(test_inputs[i],&dut_outputs[i]);
     printf(".");
     // encode dcs into images
     batch_encode(dcs_ptr,encoded_imgset_ptr,DUMP_NBR,MAX_LATENCY);
-    printf(".");
     // process these images
     dataproc_avg(encoded_imgset_ptr,final_results_ptr,MAX_LATENCY,SIZE);
     printf(".");
@@ -134,6 +127,10 @@ int main()
     all_passing = all_passing && !err_dft && !err_dut;
     printf(" %s\n",all_passing ? "[NO ERROR]\0" : "[ERROR]\0");
     i++;
+    // pointer bumping
+    dcs_ptr += MAX_LATENCY * DUMP_NBR;
+    encoded_imgset_ptr += (MAX_LATENCY-1) * SIZE * SIZE * CH_NBR;
+    final_results_ptr += (MAX_LATENCY-1);
   }
   // error message
   if(!all_passing)
@@ -144,18 +141,18 @@ int main()
   int k = 0; // index for dumps
   for (i = 0; i < ITEM_NBR; i++) {
     // pointer bumping
-    printf("--------------------------------------\nTest case %d\n",i);
-    printf("Data input and output : %d => %d\n",test_inputs[i],dut_outputs[i]);
-    printf("Collected states : ");
+    printf("--------------------------------------\nTest item %d\n",i);
+    printf("Data input and output : %0x => %0x\n",test_inputs[i],dut_outputs[i]);
+    printf("Collected states :\t");
     for (j = 0; j < MAX_LATENCY; j++) {
       printf("(");
       for (k = 0; k < DUMP_NBR; k++) {
-        printf("%d,",dcs[i][j][k]);
+        printf("%0x,",dcs[i][j][k]);
       }
       printf(")\t");
     }
     printf("\n");      
-    printf("Analysed results : ");
+    printf("Analysed results :\t");
     for (j = 0; j < MAX_LATENCY-1; j++) {
       printf("%f\t",final_results[i][j]);
     }
