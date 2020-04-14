@@ -1,5 +1,5 @@
 `include "./prewrapper.v"
-`include "../duft/dfut_top.v"
+`include "../duft_rtl/dfut_top.v"
 
 module prewrapped(
   input clk,

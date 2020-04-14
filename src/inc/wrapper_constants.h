@@ -45,3 +45,4 @@
 
 // encoder dimensions
 #define CH_NBR 3
+#define SIZE   6

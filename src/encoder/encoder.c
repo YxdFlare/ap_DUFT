@@ -1,12 +1,7 @@
 #include "type.h"
 #include "wrapper_constants.h"
-#include "lookup.h"
 #include "common.h"
 #include <stdio.h>
-
-int calc_size(int dump_nbr)
-  {return imgsize_lut[dump_nbr];}
-
 
 // reform the current state into 1-channel square-image
 // current_cycle[0],[1]...[dump_nbr-1] => img[x][y] = {0 or 1}
@@ -53,17 +48,16 @@ void encode(u32* prev_cycle, u32* current_cycle, u32* diff_img, int dump_nbr, in
     }
 }
 
-void batch_encode(u32* collected_states, u32* img_set, int dump_nbr, int max_latency)
+void batch_encode(u32* collected_states, u32* img_set)
 {
   int cycle_idx;
-  int size = calc_size(dump_nbr);
-  u32 prev[size][size];
-  u32 current[size][size];
+  u32 prev[SIZE][SIZE];
+  u32 current[SIZE][SIZE];
   u32* img_set_ptr;
-  for(cycle_idx = 1; cycle_idx < max_latency; cycle_idx++) {
-    reform(&collected_states[cycle_idx-1],&prev[0][0],dump_nbr,size);
-    reform(&collected_states[cycle_idx],&current[0][0],dump_nbr,size);
-    img_set_ptr = img_set + (cycle_idx - 1) * size * size * 3;
-    encode(&prev[0][0],&current[0][0],img_set_ptr,dump_nbr,size);
+  for(cycle_idx = 1; cycle_idx < MAX_LATENCY; cycle_idx++) {
+    reform(&collected_states[cycle_idx-1],&prev[0][0],DUMP_NBR,SIZE);
+    reform(&collected_states[cycle_idx],&current[0][0],DUMP_NBR,SIZE);
+    img_set_ptr = img_set + (cycle_idx - 1) * SIZE * SIZE * 3;
+    encode(&prev[0][0],&current[0][0],img_set_ptr,DUMP_NBR,SIZE);
   }
 }

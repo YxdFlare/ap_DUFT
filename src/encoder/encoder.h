@@ -20,5 +20,4 @@
 
         0                 1                 2          ...         M-1   
 */
-void batch_encode(u32* collected_states, u32* img_set, int dump_nbr, int max_latency);
-int calc_size(int dump_nbr);
+void batch_encode(u32* collected_states, u32* img_set);

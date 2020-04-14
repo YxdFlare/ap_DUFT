@@ -31,7 +31,6 @@ int main()
 {
   printf("\n\nIN MAIN : \n=================\n");
   // define data structures (memory allocation)
-  int SIZE = calc_size(DUMP_NBR);
   /* ai */                  u32 test_inputs[ITEM_NBR];
                             u32* test_inputs_ptr = &test_inputs[0];
   /* ai+8*/                 u32 dut_outputs[ITEM_NBR];
@@ -53,7 +52,7 @@ int main()
   printf("--------------------------------------\n");
   while (i < ITEM_NBR && all_passing) {
     printf("Test item %d ...",i);
-    all_passing = top(test_inputs_ptr,dut_outputs_ptr,final_results_ptr,MAX_LATENCY,DUMP_NBR);   
+    all_passing = top(test_inputs_ptr,dut_outputs_ptr,final_results_ptr);   
     printf(" %s\n",all_passing ? "[NO ERROR]\0" : "[ERROR]\0");
     i++;
     // pointer bumping

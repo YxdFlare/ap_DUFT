@@ -1,4 +1,4 @@
-`include "../lib/reg_and_regfile.v"
+`include "../lib_rtl/reg_and_regfile.v"
 
 module dut_io_unpack
 #(

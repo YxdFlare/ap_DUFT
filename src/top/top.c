@@ -49,7 +49,7 @@ int call_dut(u32 input, u32* output)
   return 0;  
 }
 
-int call_dft(u32 input,u32* dft_buf,int dump_nbr)
+int call_dft(u32 input,u32* dft_buf)
 {
   int err = 0;
   int lat = 0;
@@ -60,44 +60,41 @@ int call_dft(u32 input,u32* dft_buf,int dump_nbr)
   err = send_op(TEST,SCAN_RD);
   if(err) return err;
   while (_dut_state[0] < 9) {
-    for(i = 0; i < dump_nbr; i++)
+    for(i = 0; i < DUMP_NBR; i++)
       *(dft_buf + lat * DUMP_NBR + i) = DUFT_ap_ctrl_chain(DFT_OUT_BASE + i,0,READ);
     err = send_op(TICK,SCAN_RD);
     if(err) return err;
     lat++;
   }
-  for(i = 0; i < dump_nbr; i++)
+  for(i = 0; i < DUMP_NBR; i++)
     *(dft_buf + lat * DUMP_NBR + i) = DUFT_ap_ctrl_chain(DFT_OUT_BASE + i,0,READ);
   err = send_op(ENDT,IDLE);
   if(err) return err;
   return 0;
 }
 
-#define ITEM_NBR 5
-
 //-------------------------------------------------------------------------------
 // Top level
 //-------------------------------------------------------------------------------
 
-int top(u32* test_inputs, u32* dut_outputs, float* final_results, int max_latency, int dump_nbr)
+int top(u32* test_inputs, u32* dut_outputs, float* final_results)
 {
   // define data structures (memory allocation)
-  int size = calc_size(dump_nbr);
-  /* ai,ai+1,ai+2...*/      u32 dcs[max_latency][dump_nbr]; // dft_collected_states
+  /* ai,ai+1,ai+2...*/      u32 dcs[MAX_LATENCY][DUMP_NBR]; // dft_collected_states
                             u32* dcs_ptr = &dcs[0][0];
-  /* img0i,img1i,img2i...*/ u32 encoded_imgset[max_latency-1][size][size][CH_NBR];
+  /* img0i,img1i,img2i...*/ u32 encoded_imgset[MAX_LATENCY-1][SIZE][SIZE][CH_NBR];
                             u32* encoded_imgset_ptr = &encoded_imgset[0][0][0][0];
   int all_passing = 1;
   int err_dft = 0;
   int err_dut = 0;
   // input a number to the DUFT and get dcs
-  err_dft = call_dft(*test_inputs,dcs_ptr,dump_nbr);
+  err_dft = call_dft(*test_inputs,dcs_ptr);
   // input a number to the DUT and get output
   err_dut = call_dut(*test_inputs,dut_outputs);
   // encode dcs into images
-  batch_encode(dcs_ptr,encoded_imgset_ptr,dump_nbr,max_latency);
+  batch_encode(dcs_ptr,encoded_imgset_ptr);
   // process these images
-  dataproc_avg(encoded_imgset_ptr,final_results,max_latency,size);
+  dataproc_avg(encoded_imgset_ptr,final_results);
   // update testsource status
   all_passing = !err_dft && !err_dut;
     

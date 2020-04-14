@@ -1,7 +1,7 @@
 //----------------------------------------------------
 // control unit
 //----------------------------------------------------
-`include "../lib/counters.v"
+`include "../lib_rtl/counters.v"
 module axi_prewrapper_ctrl
 #(
   parameter p_sc_nbr = 16,
