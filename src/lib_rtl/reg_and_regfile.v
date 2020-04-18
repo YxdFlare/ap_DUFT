@@ -1,3 +1,4 @@
+`timescale 1ns / 100ps
 module BSRSW_RF32 // single tri-read single write 32-bit register file with biased address
 #(
   parameter base_addr = 32'd0,

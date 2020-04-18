@@ -77,7 +77,7 @@ int call_dft(u32 input,u32* dft_buf)
 // Top level
 //-------------------------------------------------------------------------------
 
-int top(u32* test_inputs, u32* dut_outputs, float* final_results)
+int top(u32* test_inputs, u32* dut_outputs, float final_results[MAX_LATENCY-1])
 {
   // define data structures (memory allocation)
   /* ai,ai+1,ai+2...*/      u32 dcs[MAX_LATENCY][DUMP_NBR]; // dft_collected_states

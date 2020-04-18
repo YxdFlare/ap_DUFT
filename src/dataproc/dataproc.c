@@ -2,7 +2,7 @@
 #include "common.h"
 #include "wrapper_constants.h"
 
-void dataproc_avg(u32* img_set, float* result_set)
+void dataproc_avg(u32* img_set, float result_set[MAX_LATENCY-1])
 {
   u32* pix;
   float pwr = 0;
@@ -18,6 +18,6 @@ void dataproc_avg(u32* img_set, float* result_set)
       }
     }
     pwr = pwr / SIZE / SIZE;
-    *result_set = pwr;
+    *(result_set + j) = pwr;
   }
 }

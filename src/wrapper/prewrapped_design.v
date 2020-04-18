@@ -1,5 +1,6 @@
+`timescale 1ns / 100ps
 `include "./prewrapper.v"
-`include "../duft_rtl/dfut_top.v"
+`include "./duft_top.v"
 
 module prewrapped(
   input clk,

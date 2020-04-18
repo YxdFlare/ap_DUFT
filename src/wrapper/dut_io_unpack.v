@@ -1,4 +1,5 @@
-`include "../lib_rtl/reg_and_regfile.v"
+`timescale 1ns / 100ps
+`include "./reg_and_regfile.v"
 
 module dut_io_unpack
 #(

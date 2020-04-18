@@ -1,5 +1,6 @@
-`include "./SIPObuf/SIPObuf.v"
-`include "../lib_rtl/ScanReg.v"
+`timescale 1ns / 100ps
+`include "./SIPObuf.v"
+`include "./ScanReg.v"
 
 module dft_datapath(
   input clk,

@@ -30,7 +30,7 @@ set_part $part_name
 
 create_clock -period 10
 
-csim_design -ldflags "--verbose"
+#csim_design -ldflags "--verbose"
 
 csynth_design
 

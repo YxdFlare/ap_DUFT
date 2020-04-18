@@ -17,6 +17,17 @@ module SIPO_buf_256B_ctrl(
   output mem_wen,
   output mem_ren
 );
+    
+  reg op_ack_REG;
+  reg op_commit_REG;
+  
+  reg addrclr_REG;
+  reg sftregclr_REG;
+  reg sften_REG;
+  reg cnten_REG;
+  reg mem_wen_REG;
+  reg mem_ren_REG;
+  
   // ctrl signal def
   localparam wr = 1'b0;
   localparam rd = 1'b1;
@@ -83,17 +94,7 @@ module SIPO_buf_256B_ctrl(
 
   //output logic
   assign scaning = (current_state == SEIN) ? 1'b1 : 1'b0;
-  
-  reg op_ack_REG;
-  reg op_commit_REG;
-  
-  reg addrclr_REG;
-  reg sftregclr_REG;
-  reg sften_REG;
-  reg cnten_REG;
-  reg mem_wen_REG;
-  reg mem_ren_REG;
-  
+
   assign op_ack = op_ack_REG;
   assign op_commit = op_commit_REG;
   assign addrclr = addrclr_REG;

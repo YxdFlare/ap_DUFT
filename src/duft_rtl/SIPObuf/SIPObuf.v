@@ -1,3 +1,4 @@
+`timescale 1ns / 100ps
 `include "./SIPObuf_ctrl.v"
 `include "./SIPObuf_datapath.v"
 

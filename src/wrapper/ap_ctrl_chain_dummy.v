@@ -1,4 +1,4 @@
-`timescale 1ns /1ps
+`timescale 1ns / 100ps
 
 
 module dummy_ap_ctrl_chain(

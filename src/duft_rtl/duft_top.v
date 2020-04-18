@@ -1,3 +1,4 @@
+`timescale 1ns / 100ps
 `include "./dft_ctrl.v"
 `include "./dft_datapath.v"
 `include "./dut.v"

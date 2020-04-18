@@ -1,3 +1,4 @@
+`timescale 1ns / 100ps
 module dft_ctrl(
   input clk,
   input reset,
@@ -32,6 +33,9 @@ localparam SCAN_BUF_RST = 4'd6;
 localparam DUMP_BUF_RST = 4'd7;
 localparam DUMP_BUF_RST_2 = 4'd8;
 
+reg op_ack_REG, op_commit_REG, sc_sen_REG, buf_reset_REG, buf_op_REG, buf_val_op_REG, buf_sin_sel_REG, sc_clr, dump_cnten, sc_cnten;
+reg dft_out_strobe_preg;
+
 // scan counter (count for chain length)
 wire [31:0] sc_cnt_value;
 arbitrary_counter32 scan_cnt (
@@ -48,6 +52,7 @@ assign sc_cntov = (sc_cnt_value == chain_len) ? 1'b1 : 1'b0;
 
 // dump counter (count for chain_len/32 + 1)
 wire [31:0] dump_cnt_value;
+reg dump_clr;
 arbitrary_counter32 dump_cnt (
     .cnt_max({5'd0,dump_nbr}), 
     .cnt_min(32'd0), 
@@ -128,8 +133,7 @@ always @(*) begin
 end
 
 // output logic
-reg op_ack_REG, op_commit_REG, sc_sen_REG, buf_reset_REG, buf_op_REG, buf_val_op_REG, buf_sin_sel_REG, dump_clr, sc_clr, dump_cnten, sc_cnten;
-reg dft_out_strobe_preg;
+
 
 assign op_ack = op_ack_REG;
 assign op_commit = op_commit_REG;

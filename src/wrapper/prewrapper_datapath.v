@@ -1,7 +1,8 @@
+`timescale 1ns / 100ps
 //----------------------------------------------------
 // datapath
 //----------------------------------------------------
-`include "../lib_rtl/reg_and_regfile.v"
+`include "./reg_and_regfile.v"
 `include "./dut_io_unpack.v"
 module axi_prewrapper_datapath
 #(

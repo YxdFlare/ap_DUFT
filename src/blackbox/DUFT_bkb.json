@@ -8,25 +8,25 @@
   ],
   
   "rtl_files" : [
-    "../src/wrapper/ap_ctrl_chain_duft.v",
-    "../src/wrapper/dut_io_unpack.v",
-    "../src/wrapper/prewrapped_design.v",
-    "../src/wrapper/prewrapper_ctrl.v",
-    "../src/wrapper/prewrapper_datapath.v",
-    "../src/wrapper/prewrapper.v",
-    "../src/lib_rtl/counters.v",
-    "../src/lib_rtl/mem.v",
-    "../src/lib_rtl/reg_and_regfile.v",
-    "../src/lib_rtl/ScanReg.v",
-    "../src/duft_rtl/dft_ctrl.v",
-    "../src/duft_rtl/dft_datapath.v",
-    "../src/duft_rtl/dut_ctrl.v",
-    "../src/duft_rtl/dut_datapath.v",
-    "../src/duft_rtl/dut.v",
-    "../src/duft_rtl/duft_top.v",
-    "../src/duft_rtl/SIPObuf/SIPObuf.v",
-    "../src/duft_rtl/SIPObuf/SIPObuf_ctrl.v",
-    "../src/duft_rtl/SIPObuf/SIPObuf_datapath.v"
+    "~/ap_DUFT/src/wrapper/ap_ctrl_chain_duft.v",
+    "~/ap_DUFT/src/wrapper/dut_io_unpack.v",
+    "~/ap_DUFT/src/wrapper/prewrapped_design.v",
+    "~/ap_DUFT/src/wrapper/prewrapper_ctrl.v",
+    "~/ap_DUFT/src/wrapper/prewrapper_datapath.v",
+    "~/ap_DUFT/src/wrapper/prewrapper.v",
+    "~/ap_DUFT/src/lib_rtl/counters.v",
+    "~/ap_DUFT/src/lib_rtl/mem.v",
+    "~/ap_DUFT/src/lib_rtl/reg_and_regfile.v",
+    "~/ap_DUFT/src/lib_rtl/ScanReg.v",
+    "~/ap_DUFT/src/duft_rtl/dft_ctrl.v",
+    "~/ap_DUFT/src/duft_rtl/dft_datapath.v",
+    "~/ap_DUFT/src/duft_rtl/dut_ctrl.v",
+    "~/ap_DUFT/src/duft_rtl/dut_datapath.v",
+    "~/ap_DUFT/src/duft_rtl/dut.v",
+    "~/ap_DUFT/src/duft_rtl/duft_top.v",
+    "~/ap_DUFT/src/duft_rtl/SIPObuf/SIPObuf.v",
+    "~/ap_DUFT/src/duft_rtl/SIPObuf/SIPObuf_ctrl.v",
+    "~/ap_DUFT/src/duft_rtl/SIPObuf/SIPObuf_datapath.v"
   ],
   
   "c_parameters" : [
@@ -53,7 +53,7 @@
   },
 
   "rtl_common_signal" : {
-    "module_clock" : "clk",
+    "module_clock" : "ap_clk",
     "module_reset" : "ap_rst",
     "module_clock_enable" : "ap_ce",
     "ap_ctrl_chain_protocol_idle" : "ap_idle",

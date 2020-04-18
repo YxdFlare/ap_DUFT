@@ -1,4 +1,4 @@
-`timescale 1ns /1ps
+`timescale 1ns / 100ps
 `include "./prewrapped_design.v"
 
 module DUFT_ap_ctrl_chain(
@@ -15,14 +15,14 @@ module DUFT_ap_ctrl_chain(
   output reg   ap_ready,
   output reg   ap_done,
 
-  input clk
+  input ap_clk
 );
 
 wire [31:0] rd_addr;
 wire [31:0] wr_addr;
 
 prewrapped core_DUFT (
-  .clk(clk),
+  .clk(ap_clk),
   .reset(ap_rst),
   .axi_rd_addr(rd_addr),
   .axi_wr_addr(wr_addr),
@@ -56,7 +56,7 @@ assign wr_valid = ap_start && !rd_wr;
 reg [2:0] current_state;
 reg [2:0] next_state;
 
-always @(posedge clk ) begin
+always @(posedge ap_clk ) begin
   if (ap_rst)
     current_state <= RST;
   else if (!ap_ce)

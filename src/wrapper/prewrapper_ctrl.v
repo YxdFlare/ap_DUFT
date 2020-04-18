@@ -1,7 +1,8 @@
+`timescale 1ns / 100ps
 //----------------------------------------------------
 // control unit
 //----------------------------------------------------
-`include "../lib_rtl/counters.v"
+`include "./counters.v"
 module axi_prewrapper_ctrl
 #(
   parameter p_sc_nbr = 16,
