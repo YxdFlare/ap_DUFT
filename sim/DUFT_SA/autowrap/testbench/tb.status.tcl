@@ -1,0 +1,1 @@
+set ::AESL_AUTOSIM::gTopFileName /home/yd383/ap_DUFT/build-vivado/zcu102/solution1_SA/./sim/autowrap/testbench/top_standalone.c_pre.c.tb.c

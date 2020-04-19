@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2019.2.1 (64-bit)
+# SW Build 2729669 on Thu Dec  5 04:48:12 MST 2019
+# IP Build 2729494 on Thu Dec  5 07:38:25 MST 2019
+# Start of session at: Sat Apr 18 18:48:15 2020
+# Process ID: 26617
+# Current directory: /home/yd383/ap_DUFT/build-vivado/zcu102/solution1_SA/sim/verilog
+# Command line: wbtcv -mode batch -source /home/yd383/ap_DUFT/build-vivado/zcu102/solution1_SA/sim/verilog/xsim.dir/top_standalone/webtalk/xsim_webtalk.tcl -notrace
+# Log file: /home/yd383/ap_DUFT/build-vivado/zcu102/solution1_SA/sim/verilog/webtalk.log
+# Journal file: /home/yd383/ap_DUFT/build-vivado/zcu102/solution1_SA/sim/verilog/webtalk.jou
+#-----------------------------------------------------------
+source /home/yd383/ap_DUFT/build-vivado/zcu102/solution1_SA/sim/verilog/xsim.dir/top_standalone/webtalk/xsim_webtalk.tcl -notrace
