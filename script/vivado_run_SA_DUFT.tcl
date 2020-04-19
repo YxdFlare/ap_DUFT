@@ -4,13 +4,15 @@ set project_name "zcu102"
 open_project -reset $project_name
 
 add_files  ../src/lib/common.c \
--cflags "-I../src/beh -I../src/lib -I../src/inc -I../src/top"
+-cflags "-I../src/beh -I../src/lib -I../src/inc -I../src/top -I../src/duft"
 add_files   ../src/top/top_standalone.c \
--cflags "-I../src/beh -I../src/lib -I../src/inc -I../src/top"
+-cflags "-I../src/beh -I../src/lib -I../src/inc -I../src/top -I../src/duft"
 add_files   ../src/beh/DUFT_ap_ctrl_chain.c \
--cflags "-I../src/beh -I../src/lib -I../src/inc -I../src/top"
+-cflags "-I../src/beh -I../src/lib -I../src/inc -I../src/top -I../src/duft"
+add_files   ../src/duft/duft.c \
+-cflags "-I../src/beh -I../src/lib -I../src/inc -I../src/top -I../src/duft"
 add_files   ../src/beh/DUT.c \
--cflags "-I../src/beh -I../src/lib -I../src/inc -I../src/top"
+-cflags "-I../src/beh -I../src/lib -I../src/inc -I../src/top -I../src/duft"
 
 add_files -blackbox ../src/blackbox/DUFT_bkb.json
 
@@ -19,7 +21,7 @@ set_top top_standalone
 
 # SPECIFY MODEL TO TEST HERE
 add_files -tb ../src/test/tb_top_SA.c \
--cflags "-I../src/beh -I../src/lib -I../src/inc -I../src/top"
+-cflags "-I../src/beh -I../src/lib -I../src/inc -I../src/top -I../src/duft"
 
 open_solution "solution1_SA"
 set_part $part_name
