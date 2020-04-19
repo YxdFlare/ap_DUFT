@@ -9,7 +9,6 @@ module dft_top #(
 )(
   input [31:0] data_in,
   output [31:0] data_out,
-  input a_s,
 
   input dut_val_op,
   output dut_op_ack,

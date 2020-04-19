@@ -22,6 +22,7 @@
 #define SCAN           8
 #define SCAN_RD        9
 #define TICK           10
+#define INVALID_STATE  0xffffffff
 
 // opcode codebook
 #define NONE  0

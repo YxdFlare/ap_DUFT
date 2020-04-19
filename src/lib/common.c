@@ -46,16 +46,6 @@ int array_teq3d(u32* arr1, u32 X1, u32 Y1, u32 Z1, u32* arr2, u32 X2, u32 Y2, u3
   }
 }
 
-int waiting_timer(int* timer, int max)
-{
-  if(*timer < max) {
-    *timer ++;
-    return 0;
-  }
-  else
-    return 1;    
-}
-
 void print_array(u32* arr, u32 len)
 {
   for(int i = 0; i < len; i++)

@@ -23,14 +23,17 @@ extern u32 _dut_value[1];
 // DUFT helper functions
 //-------------------------------------------------------------------------------
 
-int send_op(u32 operation, u32 target_state)
+int send_op(u32 operation, u32 target_state, int timer[1])
 {
   DUFT_ap_ctrl_chain(OPCODE_BASE,operation,WRITE);
   DUFT_ap_ctrl_chain(OPCODE_BASE,NONE,WRITE);
-  u32 landed_state = DUFT_ap_ctrl_chain(STATE_BASE,0,READ);
-  if (landed_state != target_state) {
-    //printf("[ERROR] : Error when transiting into state %d, actual landed at %d\n",target_state,landed_state);
-    return 1;
+  u32 landed_state = INVALID_STATE;
+  while (landed_state != target_state) {
+    landed_state = DUFT_ap_ctrl_chain(STATE_BASE,0,READ);
+    if (*timer < 1000)
+      (*timer) ++;
+    else 
+      return 1;
   }
   return 0;
 }
@@ -38,12 +41,16 @@ int send_op(u32 operation, u32 target_state)
 int call_dut(u32 input, u32* output)
 {
   int err = 0;
+  int tim = 0;
   DUFT_ap_ctrl_chain(DUT_IN_BASE,input,WRITE);
-  err = send_op(INPUT,INPUT_RDY);
+  tim = 0;
+  err = send_op(INPUT,INPUT_RDY,&tim);
   if(err) return err;
-  err = send_op(RUN,OUTPUT_VAL);
+  tim = 0;
+  err = send_op(RUN,OUTPUT_VAL,&tim);
   if(err) return err;
-  err = send_op(ENDR,IDLE);
+  tim = 0;
+  err = send_op(ENDR,IDLE,&tim);
   if(err) return err;
   *output = DUFT_ap_ctrl_chain(DUT_OUT_BASE,0,READ);
   return 0;  
@@ -54,21 +61,26 @@ int call_dft(u32 input,u32* dft_buf)
   int err = 0;
   int lat = 0;
   int i = 0;
+  int tim = 0;
   DUFT_ap_ctrl_chain(DUT_IN_BASE,input,WRITE);
-  err = send_op(INPUT,INPUT_RDY);
+  tim = 0;
+  err = send_op(INPUT,INPUT_RDY,&tim);
   if(err) return err;
-  err = send_op(TEST,SCAN_RD);
+  tim = 0;
+  err = send_op(TEST,SCAN_RD,&tim);
   if(err) return err;
   while (_dut_state[0] < 9) {
     for(i = 0; i < DUMP_NBR; i++)
       *(dft_buf + lat * DUMP_NBR + i) = DUFT_ap_ctrl_chain(DFT_OUT_BASE + i,0,READ);
-    err = send_op(TICK,SCAN_RD);
+    tim = 0;
+    err = send_op(TICK,SCAN_RD,&tim);
     if(err) return err;
     lat++;
   }
   for(i = 0; i < DUMP_NBR; i++)
     *(dft_buf + lat * DUMP_NBR + i) = DUFT_ap_ctrl_chain(DFT_OUT_BASE + i,0,READ);
-  err = send_op(ENDT,IDLE);
+  tim = 0;
+  err = send_op(ENDT,IDLE,&tim);
   if(err) return err;
   return 0;
 }
