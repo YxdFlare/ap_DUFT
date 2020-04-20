@@ -64,7 +64,7 @@
   },
 
   "rtl_performance" : {
-    "latency" : "3",
+    "latency" : "2",
     "II" : "0"
   },
   

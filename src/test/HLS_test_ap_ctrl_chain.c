@@ -1,25 +1,7 @@
-#include "common.h"
-#include "wrapper_constants.h"
-#include "top_standalone.h"
-
+#include "dummy_AC_C.h"
 
 #include <stdio.h>
 #include <stdlib.h>
-
-// register file used for the FL model of DUFT
-typedef struct {
-  u32 opcode;
-  u32 state;
-  u32 config;
-  u32 dut_in_ptr[8];
-  u32 dut_out_ptr[8];
-  u32 dft_out_ptr[64];
-  u32 test_in;
-  u32 test_out;
-} RF;
-RF _rf = {.opcode = NONE,.state = IDLE,.test_out = 0x72160722};
-u32 _dut_state[1] = {0};
-u32 _dut_value[1] = {0};
 
 #define ITEM_NBR 5
 
@@ -31,16 +13,13 @@ int main()
 {
   printf("\n\nIN MAIN : \n=================\n");
   // define data structures (memory allocation)
-  /* ai */                  u32 test_inputs[ITEM_NBR];
-  /* ai */                  u32 dut_outputs[ITEM_NBR];
+  /* ai */                  int test_inputs[ITEM_NBR];
+  /* ai */                  int dut_outputs[ITEM_NBR];
   printf("Data structure initialized.\n");
   printf("Initializing inputs......");
   int i = 0; // index for test items
-  for (i = 0; i < ITEM_NBR; i++) {
+  for (i = 0; i < ITEM_NBR; i++)
     test_inputs[i] = rand();
-    dut_outputs[i] = 0x72160722;
-  }
-    
   printf("Inputs initialized.\nInitializing test harness......");
 
   int all_passing = 1;
@@ -49,10 +28,8 @@ int main()
   printf("--------------------------------------\n");
   while (i < ITEM_NBR && all_passing) {
     printf("Test item %d ...",i);
-    //all_passing = top_standalone(test_inputs[i]);
-    top_simple_wrapper(TEST_IN_BASE, test_inputs[i], WRITE);
-    dut_outputs[i] = top_simple_wrapper(TEST_OUT_BASE, 0, READ);
-    all_passing = (test_inputs[i] == dut_outputs[i]);
+    dut_outputs[i] = dummy_ap_ctrl_chain(test_inputs[i]);
+    //all_passing = (dut_outputs[i] == (test_inputs[i] + 1));
     printf(" %s\n",all_passing ? "[PASSED]\0" : "[ERROR]\0");
     i++;
   }

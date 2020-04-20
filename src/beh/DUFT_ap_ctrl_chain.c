@@ -99,6 +99,7 @@ u32* addr_map(RF* regfile, u32 addr)
 
 u32 DUFT_ap_ctrl_chain(u32 addr, u32 wr_data, u32 rd_wr)
 {
+  #pragma HLS latency min=3 max=3
   u32* ptr;
   ptr = addr_map(&_rf,addr);
   if(rd_wr)     
