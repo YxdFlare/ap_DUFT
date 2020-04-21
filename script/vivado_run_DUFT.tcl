@@ -30,9 +30,9 @@ set_part $part_name
 
 create_clock -period 10
 
-#csim_design -ldflags "--verbose"
+csim_design -ldflags "--verbose"
 
 csynth_design
 
 # CHOOSE EITHER VCD FILE GENERATION (1st option) or COSIM EXECUTION (2nd option)
-cosim_design -ldflags "" -trace_level port
+cosim_design -ldflags "" -trace_level all

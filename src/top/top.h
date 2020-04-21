@@ -1,3 +1,3 @@
 #include "type.h"
 
-int top(u32* test_inputs, u32* dut_outputs, float* final_results);
+int top(int func, u32 addr, u32 data, int rd_wr, u32 dcs[MAX_LATENCY*DUMP_NBR], float final_results[MAX_LATENCY-1]);

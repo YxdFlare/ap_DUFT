@@ -24,7 +24,7 @@ void dft_scan(RF* regfile, int dump_nbr)
 
 void rf_update(RF* regfile)
 {
-  switch (regfile->state)
+  switch ((regfile->state) & WRAPPER_FSM_CS)
   {
   case IDLE:
     if(regfile->opcode == INPUT) {
@@ -59,7 +59,10 @@ void rf_update(RF* regfile)
     else if(regfile->opcode == TICK) {
       dut_tick(_dut_value,_dut_state);
       dft_scan(regfile,DUMP_NBR);
-      regfile->state = SCAN_RD;
+      if(_dut_state[0] == 8)
+        regfile->state = SCAN_RD | DUT_OP_CM;
+      else
+        regfile->state = SCAN_RD;
     }
     break;
     
@@ -99,7 +102,6 @@ u32* addr_map(RF* regfile, u32 addr)
 
 u32 DUFT_ap_ctrl_chain(u32 addr, u32 wr_data, u32 rd_wr)
 {
-  #pragma HLS latency min=3 max=3
   u32* ptr;
   ptr = addr_map(&_rf,addr);
   if(rd_wr)     

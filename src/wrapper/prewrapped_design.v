@@ -41,6 +41,7 @@ module prewrapped(
     .dut_op_commit(dut_op_commit),
     .dut_commit_ack(dut_commit_ack),
     .dut_sen(ex_sen),
+    .dut_rst(dut_rst),
 
     // design for test (dft) interface, max 16 scan chains
     .dft_output_data(dft_out),
@@ -78,7 +79,7 @@ module prewrapped(
     .ex_sen(ex_sen),
 
     .clk(clk),
-    .reset(reset)
+    .reset(reset || dut_rst)
   );
 
 

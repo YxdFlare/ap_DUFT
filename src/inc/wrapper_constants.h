@@ -24,6 +24,17 @@
 #define TICK           10
 #define INVALID_STATE  0xffffffff
 
+// state register def
+#define WRAPPER_FSM_CS 0x00F
+#define DUT_CM_ACK 0x010
+#define DUT_OP_CM  0x020
+#define DUT_OP_ACK 0x040
+#define DUT_VAL_OP 0x080
+#define DFT_CM_ACK 0x100
+#define DFT_OP_CM  0x200
+#define DFT_OP_ACK 0x400
+#define DFT_VAL_OP 0x800
+
 // opcode codebook
 #define NONE  0
 #define INPUT 1
@@ -39,6 +50,8 @@
 
 // DUT parameter
 #define MAX_LATENCY 9
+#define DUT_ILEN 32
+#define DUT_OLEN 32
 
 // DUFT operations
 #define WRITE  0

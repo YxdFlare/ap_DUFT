@@ -15,6 +15,7 @@ module axi_prewrapper_ctrl
   input dut_op_commit,
   output reg dut_commit_ack,
   output reg dut_sen,
+  output reg dut_rst,
 
   // design for test (dft) interface
   output reg [p_sc_nbr-1:0] dft_val_op,
@@ -212,6 +213,7 @@ module axi_prewrapper_ctrl
   end
 
   // output logic
+  localparam RST        = 13;
   localparam NOP        = 0;
   localparam VAL_OP     = 1;
   localparam CM_ACK     = 2;
@@ -254,10 +256,11 @@ module axi_prewrapper_ctrl
     begin
       // dut transactions
       case (c_dut)
-        VAL_OP: begin dut_val_op = 1'b1; dut_commit_ack = 1'b0; dut_sen = 1'b0; end
-        CM_ACK: begin dut_val_op = 1'b0; dut_commit_ack = 1'b1; dut_sen = 1'b0; end
-        HALT:   begin dut_val_op = 1'b0; dut_commit_ack = 1'b0; dut_sen = 1'b1; end
-        default:begin dut_val_op = 1'b0; dut_commit_ack = 1'b0; dut_sen = 1'b0; end
+        VAL_OP: begin dut_val_op = 1'b1; dut_commit_ack = 1'b0; dut_sen = 1'b0; dut_rst = 1'b0; end
+        CM_ACK: begin dut_val_op = 1'b0; dut_commit_ack = 1'b1; dut_sen = 1'b0; dut_rst = 1'b0; end
+        HALT:   begin dut_val_op = 1'b0; dut_commit_ack = 1'b0; dut_sen = 1'b1; dut_rst = 1'b0; end
+        RST:    begin dut_val_op = 1'b0; dut_commit_ack = 1'b0; dut_sen = 1'b0; dut_rst = 1'b0; end
+        default:begin dut_val_op = 1'b0; dut_commit_ack = 1'b0; dut_sen = 1'b0; dut_rst = 1'b0; end
       endcase
 
       // dft transactions
@@ -323,7 +326,7 @@ module axi_prewrapper_ctrl
   always @(*) begin
     case (current_state)
       //                      dut     dft      opcode  status  config  dutin  dutout  flatten  inf    pack    outp   dftout      
-      IDLE:             cbout(NOP,    NOP,     RD,     WR,     NOP,    NOP,   NOP,    CLR,     NOP,   CLR,    NOP,   CLR);        
+      IDLE:             cbout(RST,    NOP,     RD,     WR,     NOP,    NOP,   NOP,    CLR,     NOP,   CLR,    NOP,   CLR);        
 
       INPUT_FLATTEN:    cbout(NOP,    NOP,     NOP,    WR,     NOP,    RD,    NOP,    PLUS_1,  F_SIN, CLR,    NOP,   CLR);  
 

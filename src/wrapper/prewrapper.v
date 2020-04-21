@@ -29,6 +29,7 @@ module axi_prewrapper
   input dut_op_commit,
   output dut_commit_ack,
   output dut_sen,
+  output dut_rst,
 
   // design for test (dft) interface, max 16 scan chains
   input [32*p_sc_nbr-1:0] dft_output_data,
@@ -99,6 +100,7 @@ module axi_prewrapper
     .dut_op_commit(dut_op_commit),
     .dut_commit_ack(dut_commit_ack),
     .dut_sen(dut_sen),
+    .dut_rst(dut_rst),
 
     .dft_val_op(dft_val_op),
     .dft_op_ack(dft_op_ack),

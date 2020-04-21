@@ -3,6 +3,7 @@
 #include "encoder.h"
 #include "DUFT_ap_ctrl_chain.h"
 #include "wrapper_constants.h"
+#include "top_constants.h"
 
 // register file used for the FL model of DUFT
 typedef struct {
@@ -19,96 +20,29 @@ extern RF _rf;
 extern u32 _dut_state[1];
 extern u32 _dut_value[1];
 
-//-------------------------------------------------------------------------------
-// DUFT helper functions
-//-------------------------------------------------------------------------------
-
-int send_op(u32 operation, u32 target_state, int timer[1])
-{
-  DUFT_ap_ctrl_chain(OPCODE_BASE,operation,WRITE);
-  DUFT_ap_ctrl_chain(OPCODE_BASE,NONE,WRITE);
-  u32 landed_state = INVALID_STATE;
-  while (landed_state != target_state) {
-    landed_state = DUFT_ap_ctrl_chain(STATE_BASE,0,READ);
-    if (*timer < 1000)
-      (*timer) ++;
-    else 
-      return 1;
-  }
-  return 0;
-}
-
-int call_dut(u32 input, u32* output)
-{
-  int err = 0;
-  int tim = 0;
-  DUFT_ap_ctrl_chain(DUT_IN_BASE,input,WRITE);
-  tim = 0;
-  err = send_op(INPUT,INPUT_RDY,&tim);
-  if(err) return err;
-  tim = 0;
-  err = send_op(RUN,OUTPUT_VAL,&tim);
-  if(err) return err;
-  tim = 0;
-  err = send_op(ENDR,IDLE,&tim);
-  if(err) return err;
-  *output = DUFT_ap_ctrl_chain(DUT_OUT_BASE,0,READ);
-  return 0;  
-}
-
-int call_dft(u32 input,u32* dft_buf)
-{
-  int err = 0;
-  int lat = 0;
-  int i = 0;
-  int tim = 0;
-  DUFT_ap_ctrl_chain(DUT_IN_BASE,input,WRITE);
-  tim = 0;
-  err = send_op(INPUT,INPUT_RDY,&tim);
-  if(err) return err;
-  tim = 0;
-  err = send_op(TEST,SCAN_RD,&tim);
-  if(err) return err;
-  while (_dut_state[0] < 9) {
-    for(i = 0; i < DUMP_NBR; i++)
-      *(dft_buf + lat * DUMP_NBR + i) = DUFT_ap_ctrl_chain(DFT_OUT_BASE + i,0,READ);
-    tim = 0;
-    err = send_op(TICK,SCAN_RD,&tim);
-    if(err) return err;
-    lat++;
-  }
-  for(i = 0; i < DUMP_NBR; i++)
-    *(dft_buf + lat * DUMP_NBR + i) = DUFT_ap_ctrl_chain(DFT_OUT_BASE + i,0,READ);
-  tim = 0;
-  err = send_op(ENDT,IDLE,&tim);
-  if(err) return err;
-  return 0;
-}
 
 //-------------------------------------------------------------------------------
 // Top level
 //-------------------------------------------------------------------------------
 
-int top(u32* test_inputs, u32* dut_outputs, float final_results[MAX_LATENCY-1])
+int top(int func, u32 addr, u32 data, int rd_wr, u32 dcs[MAX_LATENCY*DUMP_NBR], float final_results[MAX_LATENCY-1])
 {
   // define data structures (memory allocation)
-  /* ai,ai+1,ai+2...*/      u32 dcs[MAX_LATENCY][DUMP_NBR]; // dft_collected_states
-                            u32* dcs_ptr = &dcs[0][0];
   /* img0i,img1i,img2i...*/ u32 encoded_imgset[MAX_LATENCY-1][SIZE][SIZE][CH_NBR];
                             u32* encoded_imgset_ptr = &encoded_imgset[0][0][0][0];
-  int all_passing = 1;
-  int err_dft = 0;
-  int err_dut = 0;
-  // input a number to the DUFT and get dcs
-  err_dft = call_dft(*test_inputs,dcs_ptr);
-  // input a number to the DUT and get output
-  err_dut = call_dut(*test_inputs,dut_outputs);
-  // encode dcs into images
-  batch_encode(dcs_ptr,encoded_imgset_ptr);
-  // process these images
-  dataproc_avg(encoded_imgset_ptr,final_results);
-  // update testsource status
-  all_passing = !err_dft && !err_dut;
-    
-  return all_passing;
+  int DUFT_return = 0;
+  switch (func) {
+  case DUFT:
+    DUFT_return = DUFT_ap_ctrl_chain(addr,data,rd_wr);
+    break;
+  case ENCODE:
+    batch_encode(dcs,encoded_imgset_ptr);
+    break;
+  case PROCESS:
+    dataproc_avg(encoded_imgset_ptr,final_results);
+    break;  
+  default:
+    break;
+  } 
+  return DUFT_return;
 }
