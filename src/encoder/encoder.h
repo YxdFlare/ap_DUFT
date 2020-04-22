@@ -1,4 +1,5 @@
 #include "type.h"
+#include "wrapper_constants.h"
 
 // input: collected states of one transaction
 /*  [j[k]] = [cycle_idx[dump_idx]]
@@ -20,4 +21,4 @@
 
         0                 1                 2          ...         M-1   
 */
-void batch_encode(u32* collected_states, u32* img_set);
+void batch_encode(u32 collected_states[MAX_LATENCY*DUMP_NBR], u32 img_set[(MAX_LATENCY-1)*SIZE*SIZE*CH_NBR]);

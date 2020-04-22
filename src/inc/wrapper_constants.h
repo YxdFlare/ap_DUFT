@@ -1,3 +1,6 @@
+#ifndef WRAPPER_CONST_H
+#define WRAPPER_CONST_H
+
 // address mapping
 #define OPCODE_BASE    0x00000000
 #define STATE_BASE     0x00000001
@@ -52,6 +55,8 @@
 #define MAX_LATENCY 9
 #define DUT_ILEN 32
 #define DUT_OLEN 32
+#define DUT_IACK 1
+#define DFT_IACK 1
 
 // DUFT operations
 #define WRITE  0
@@ -60,3 +65,8 @@
 // encoder dimensions
 #define CH_NBR 3
 #define SIZE   6
+
+// interface
+#define IO_LATENCY 3
+
+#endif

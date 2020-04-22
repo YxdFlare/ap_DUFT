@@ -1,28 +1,21 @@
 #include "common.h"
 #include "wrapper_constants.h"
+#include "wrapper_datastruct.h"
 #include "top.h"
 #include "encoder.h"
+#include "wrapper_datastruct.h"
 #include "top_constants.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
-// register file used for the FL model of DUFT
-typedef struct {
-  u32 opcode;
-  u32 state;
-  u32 config;
-  u32 dut_in_ptr[8];
-  u32 dut_out_ptr[8];
-  u32 dft_out_ptr[64];
-  u32 test_in;
-  u32 test_out;
-} RF;
-RF _rf = {.opcode = NONE,.state = IDLE};
-u32 _dut_state[1] = {0};
-u32 _dut_value[1] = {0};
+RF _rf;
+u32 _dut_value[1];
+u32 _dut_state[1];
+int cycle_cnt = 0;
 
-#define ITEM_NBR 5
+#define ITEM_NBR 1
+#define RANDOM_TEST 0
 
 //-------------------------------------------------------------------------------
 // DUFT helper functions
@@ -81,7 +74,7 @@ int call_dft(u32 input,u32* dft_buf)
     for(i = 0; i < DUMP_NBR; i++)
       *(dft_buf + lat * DUMP_NBR + i) = top(DUFT,DFT_OUT_BASE + i,0,READ,0,0);
     tim = 0;
-    err = send_op(TICK,SCAN_RD,&tim);
+    err = send_op(NEXT,SCAN_RD,&tim);
     if(err) return err;
     lat++;
   } while (!(top(DUFT,STATE_BASE,0,READ,0,0) & DUT_OP_CM));
@@ -115,7 +108,11 @@ int main()
   printf("Initializing inputs......");
   int i = 0; // index for test items
   for (i = 0; i < ITEM_NBR; i++)
-    test_inputs[i] = rand();
+    if(RANDOM_TEST)
+      test_inputs[i] = rand();
+    else
+      test_inputs[i] = test_inputgen(i);
+    
   printf("Inputs initialized.\nInitializing test harness......");
 
   int all_passing = 1;

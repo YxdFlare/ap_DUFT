@@ -24,13 +24,15 @@ set_top top
 # SPECIFY MODEL TO TEST HERE
 add_files -tb ../src/test/tb_top.c \
 -cflags "-I../src/beh -I../src/lib -I../src/inc -I../src/encoder -I../src/dataproc -I../src/top"
+add_files -tb ../src/test/directed_test.c \
+-cflags "-I../src/beh -I../src/lib -I../src/inc -I../src/encoder -I../src/dataproc -I../src/top"
 
 open_solution "solution1"
 set_part $part_name
 
 create_clock -period 10
 
-csim_design -ldflags "--verbose"
+#csim_design -ldflags "--verbose"
 
 csynth_design
 
