@@ -3,5 +3,3 @@
 **/*.backup
 **/*.o
 .vscode/
-wave
-result
