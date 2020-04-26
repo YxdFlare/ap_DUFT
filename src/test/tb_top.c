@@ -5,6 +5,7 @@
 #include "encoder.h"
 #include "wrapper_datastruct.h"
 #include "top_constants.h"
+#include "directed_test.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,8 +15,8 @@ u32 _dut_value[1];
 u32 _dut_state[1];
 int cycle_cnt = 0;
 
-#define ITEM_NBR 1
-#define RANDOM_TEST 0
+#define ITEM_NBR 100
+#define RANDOM_TEST 1
 
 //-------------------------------------------------------------------------------
 // DUFT helper functions

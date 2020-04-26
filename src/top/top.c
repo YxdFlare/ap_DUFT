@@ -6,6 +6,8 @@
 #include "wrapper_datastruct.h"
 #include "top_constants.h"
 
+#include <stdio.h>
+
 // #include "wrapper_datastruct.h"
 
 // extern RF _rf;
@@ -21,7 +23,7 @@
 int top(int func, u32 addr, u32 data, int rd_wr, u32 dcs[MAX_LATENCY*DUMP_NBR], float final_results[MAX_LATENCY-1])
 {
   // define data structures (memory allocation)
-  /* img0i,img1i,img2i...*/ u32 encoded_imgset[(MAX_LATENCY-1)*SIZE*SIZE*CH_NBR];
+  static u32 encoded_imgset[(MAX_LATENCY-1)*SIZE*SIZE*CH_NBR];
   int DUFT_return = 0;
   switch (func) {
   case DUFT:
@@ -29,6 +31,13 @@ int top(int func, u32 addr, u32 data, int rd_wr, u32 dcs[MAX_LATENCY*DUMP_NBR], 
     break;
   case ENCODE:
     batch_encode(dcs,encoded_imgset);
+    #ifndef __SYNTHESIS__
+      printf("\nIN TOP:\n================\n");
+      for (int i = 0; i < MAX_LATENCY-1; i++) {
+        printf("%d->%d\n",i,i+1);
+        print_array3d(encoded_imgset + i * SIZE * SIZE * CH_NBR,SIZE,SIZE,CH_NBR);
+      }            
+    #endif
     break;
   case PROCESS:
     dataproc_avg(encoded_imgset,final_results);

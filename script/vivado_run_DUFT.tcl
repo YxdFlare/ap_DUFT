@@ -32,9 +32,11 @@ set_part $part_name
 
 create_clock -period 10
 
-#csim_design -ldflags "--verbose"
+#csim_design -ldflags "--verbose -std=c11"
 
 csynth_design
 
 # CHOOSE EITHER VCD FILE GENERATION (1st option) or COSIM EXECUTION (2nd option)
-cosim_design -ldflags "" -trace_level all
+cosim_design -ldflags "--verbose -std=c11" -trace_level all
+
+exit
